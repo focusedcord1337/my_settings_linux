@@ -1,0 +1,4 @@
+[custom0]
+binding='<Super>k'
+command='gnome-control-center keyboard'
+name='keyboard settings'

@@ -1,0 +1,71 @@
+[/]
+default='3feb4636-6af3-4ab3-a4a3-9bcb97eeb838'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '8b970ccd-31d9-4df9-bdb7-de4cb8dacf9d', 'f3026048-4ddc-4b89-9d1b-0e3e58527595', '3feb4636-6af3-4ab3-a4a3-9bcb97eeb838']
+
+[:3feb4636-6af3-4ab3-a4a3-9bcb97eeb838]
+audible-bell=false
+background-color='rgb(5,4,7)'
+background-transparency-percent=0
+bold-color='rgb(135,0,233)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cursor-background-color='rgb(240,206,27)'
+cursor-blink-mode='on'
+cursor-colors-set=true
+cursor-foreground-color='rgb(15,22,77)'
+foreground-color='rgb(20,203,55)'
+highlight-background-color='rgb(55,209,138)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(0,0,0)'
+palette=['rgb(23,20,33)', 'rgb(192,28,40)', 'rgb(163,71,186)', 'rgb(244,211,36)', 'rgb(18,72,139)', 'rgb(38,162,105)', 'rgb(237,119,51)', 'rgb(208,207,204)', 'rgb(94,92,100)', 'rgb(246,97,81)', 'rgb(192,97,203)', 'rgb(255,210,90)', 'rgb(42,123,222)', 'rgb(51,209,122)', 'rgb(233,173,12)', 'rgb(255,255,255)']
+use-theme-colors=false
+use-theme-transparency=true
+use-transparent-background=false
+visible-name='MY_dark'
+
+[:8b970ccd-31d9-4df9-bdb7-de4cb8dacf9d]
+audible-bell=false
+background-color='rgb(23,20,33)'
+background-transparency-percent=0
+bold-color='rgb(7,180,64)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cell-height-scale=1.0
+cell-width-scale=1.0
+cursor-background-color='rgb(119,24,177)'
+cursor-blink-mode='on'
+cursor-colors-set=true
+cursor-foreground-color='rgb(255,255,255)'
+cursor-shape='block'
+font='Noto Mono 14'
+foreground-color='rgb(208,206,192)'
+highlight-colors-set=true
+highlight-foreground-color='rgb(55,237,115)'
+palette=['rgb(0,0,0)', 'rgb(170,0,0)', 'rgb(33,190,84)', 'rgb(235,220,11)', 'rgb(0,0,170)', 'rgb(170,0,170)', 'rgb(215,103,0)', 'rgb(122,115,115)', 'rgb(85,85,85)', 'rgb(255,85,85)', 'rgb(7,180,64)', 'rgb(255,247,58)', 'rgb(85,85,255)', 'rgb(255,85,255)', 'rgb(251,165,65)', 'rgb(231,205,52)']
+use-system-font=true
+use-theme-colors=false
+use-theme-transparency=true
+use-transparent-background=false
+visible-name='MY_GNM'
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+audible-bell=false
+background-color='rgb(23,20,33)'
+cursor-blink-mode='on'
+foreground-color='rgb(208,207,204)'
+use-theme-colors=true
+use-theme-transparency=true
+visible-name='Regular smegular'
+
+[:f3026048-4ddc-4b89-9d1b-0e3e58527595]
+audible-bell=false
+background-color='rgb(125,69,187)'
+bold-color='rgb(139,127,252)'
+bold-color-same-as-fg=false
+bold-is-bright=true
+cursor-blink-mode='on'
+cursor-colors-set=false
+foreground-color='rgb(255,255,255)'
+palette=['rgb(23,20,33)', 'rgb(192,28,40)', 'rgb(38,162,105)', 'rgb(162,115,76)', 'rgb(18,72,139)', 'rgb(163,71,186)', 'rgb(255,172,71)', 'rgb(208,207,204)', 'rgb(94,92,100)', 'rgb(246,97,81)', 'rgb(51,209,122)', 'rgb(233,173,12)', 'rgb(42,123,222)', 'rgb(192,97,203)', 'rgb(255,197,129)', 'rgb(255,255,255)']
+use-theme-colors=false
+visible-name='purpel_hermit'
