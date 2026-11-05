@@ -1,0 +1,7 @@
+[/]
+begin-resize=['<Control>r']
+close=['<Control><Alt>minus']
+minimize=['<Control><Alt>Down']
+switch-to-workspace-down=@as []
+switch-to-workspace-up=@as []
+unmaximize=['<Control><Alt>Up']
