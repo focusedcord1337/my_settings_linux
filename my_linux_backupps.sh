@@ -23,6 +23,7 @@ echo "📦 Sparar VS Code-tillägg..."
 echo "⚙️  Sparar konfigurationsfiler..."
 dconf dump /org/gnome/terminal/legacy/profiles:/ > terminal_profiles.dconf || echo "Ingen gnome terminal profil hittades att spara."
 dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > custom-shortcuts.txt || echo "Inga keyboard shortcuts hittades!"
+cp ~/.bash_aliases -t . || echo "Could not find .bash_aliases"   
 
 echo "🚀 Skickar ändringar till GitHub..."
 git add .
