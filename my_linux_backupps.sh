@@ -23,14 +23,15 @@ echo "📦 Saving bash aliases ..."
 cp ~/.bash_aliases -t . || echo "⚠️ Could not find .bash_aliases"
 
 echo "⚙️  Saving custom shorcuts ..."
-dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > custom-shortcuts.txt || echo "⚠️ No keyboard shortcuts found!"
+dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > $REPO_DIR/custom-shortcuts.txt || echo "⚠️ No custom shortcut keybinds found!"
 echo "⚙️  Saving custom window shorcuts ..."
-dconf dump /org/gnome/desktop/wm/keybindings/ > window-shortcuts.txt || echo "⚠️ No window keyboard shortcuts found!"
-echo "⚙️  Saving custom mutter shorcuts ..."
-dconf dump /org/gnome/mutter/keybindings/ > ~/mutter-shortcuts.txt || echo "⚠️ No mutter shortcuts found!"
-echo "⚙️  Saving custom shell shorcuts ..."
-dconf dump /org/gnome/shell/keybindings/ > ~/shell-shortcuts.txt || echo "⚠️ No shell shortcuts found!"
+dconf dump /org/gnome/desktop/wm/keybindings/ > $REPO_DIR/window-shortcuts.txt || echo "⚠️ No custom window keybinds found!"
 
+# Not needed right now
+# echo "⚙️  Saving custom mutter shorcuts ..."
+# dconf dump /org/gnome/mutter/keybindings/ > $REPO_DIR/mutter-shortcuts.txt || echo "⚠️ No custom mutter keybinds found!"
+# echo "⚙️  Saving custom shell shorcuts ..."
+# dconf dump /org/gnome/shell/keybindings/ > $REPO_DIR/shell-shortcuts.txt || echo "⚠️ No custom shell keybinds found!"
 
 echo "🚀 Sending changes to GitHub..."
 git add .

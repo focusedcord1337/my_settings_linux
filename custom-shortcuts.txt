@@ -5,7 +5,7 @@ name='keyboard settings'
 
 [custom1]
 binding='<Control><Alt>s'
-command="gnome-terminal -- bash -i -c \"svs;  read -p '⏯️ Press key to coninue ...';  clear; exec bash\""
+command="gnome-terminal -- bash -i -c \"svs;  read -p '⏯️     Press key to coninue ...';  clear; exec bash\""
 name='Save all configs'
 
 [custom2]
