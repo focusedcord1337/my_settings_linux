@@ -21,6 +21,8 @@ echo "📦 Saving config files..."
 dconf dump /org/gnome/terminal/legacy/profiles:/ > terminal_profiles.dconf || echo "⚠️ No gnome terminal profil found!"
 echo "📦 Saving bash aliases ..."
 cp ~/.bash_aliases -t . || echo "⚠️ Could not find .bash_aliases"
+echo "📦 Saving bash profil ..."
+cp ~/.bash_profile -t . || echo "⚠️ Could not find .bash_profile"
 
 echo "⚙️  Saving custom shorcuts ..."
 dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > $REPO_DIR/custom-shortcuts.txt || echo "⚠️ No custom shortcut keybinds found!"
@@ -33,9 +35,24 @@ dconf dump /org/gnome/desktop/wm/keybindings/ > $REPO_DIR/window-shortcuts.txt |
 # echo "⚙️  Saving custom shell shorcuts ..."
 # dconf dump /org/gnome/shell/keybindings/ > $REPO_DIR/shell-shortcuts.txt || echo "⚠️ No custom shell keybinds found!"
 
+
+# CONTROLL THAT THERE IS CHANGES
+if [[ -z "$(git status --porcelain)" ]]; then # -z checks if str from git status is empty
+
+    echo "✨ No changes detected in your Linux settings. Backup is already up to date!"
+    exit 0
+else
+    # Add msg to commit if not just pressing enter
+    read -p "📔 Optional commit msg: " commit_msg
+    if [[ "${#commit_msg}" -gt 0 ]]; then
+        commit_msg="  | $commit_msg"
+    fi
+fi
+
 echo "🚀 Sending changes to GitHub..."
+
 git add .
-git commit -m "🐧 Uppdating Linux settings: $(date +'%Y-%m-%d %H:%M')"
+git commit -m "🐧 Uppdating Linux settings: $(date +'%Y-%m-%d %H:%M') $commit_msg"
 git push -u origin main --force
 
 echo "✅ Everything uploaded to GitHub!"
