@@ -321,5 +321,5 @@ parse_git_branch() { # Function that only generate branch name if inside Git-rep
 	fi
 }
 
-# Uppdatera PS1 (grenen visas i cyan endast när den är tillgänglig)
-export PS1=$PS1"\[\033[38;5;14m\]\$(parse_git_branch)\[\033[00m\]\$  "
+# Uppdate PS1 to include git branch if inside repo
+export PS1="${PS1%\\\$*}\[\033[38;5;14m\]\$(parse_git_branch)\[\033[00m\]\$  "
