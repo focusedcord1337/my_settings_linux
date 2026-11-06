@@ -315,11 +315,10 @@ my_dir_find(){ #Finds dirs containg args recursivly
 	fi
 }
 
-# Funktion som endast returnerar grennamnet om du är i en Git-repo
-parse_git_branch() {
-if git rev-parse --is-inside-work-tree &>/dev/null; then
-echo " ($(git branch --show-current 2>/dev/null))"
-fi
+parse_git_branch() { # Function that only generate branch name if inside Git-repo
+	if git rev-parse --is-inside-work-tree &>/dev/null; then
+	echo " ($(git branch --show-current 2>/dev/null))"
+	fi
 }
 
 # Uppdatera PS1 (grenen visas i cyan endast när den är tillgänglig)
