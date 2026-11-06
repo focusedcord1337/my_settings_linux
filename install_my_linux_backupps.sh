@@ -17,6 +17,8 @@ else
     git remote set-url origin "$GITHUB_REPO_URL"
 fi
 
+echo "🐧 Installing Linux settings/config files..."
+
 echo "🛸 Getting latest settings..."
 git pull origin main || { echo "⚠️ Failed to get latest settings"; exit 1; }
 
@@ -47,6 +49,14 @@ if [[ -f "$REPO_DIR/.bash_profile" ]]; then
 else
     echo "⚠️ Could not find .bash_profile in repository"
 fi
+
+echo "🛠️ Installing custom mimeapps config..."
+if [[ -f "$REPO_DIR/*mimeapps.list" ]]; then
+    cp "$REPO_DIR/*mimeapps.list" ~/.config/
+else
+    echo "⚠️ Could not find .bash_profile in repository"
+fi
+
 
 # Not needed right now
 # echo "📶 Installing mutter keybinds ..."

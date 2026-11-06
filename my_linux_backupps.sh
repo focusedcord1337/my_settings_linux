@@ -17,7 +17,9 @@ else
     git remote set-url origin "$GITHUB_REPO_URL"
 fi
 
-echo "📦 Saving config files..."
+echo "🐧 Backupping Linux settings/config files..."
+
+echo "📦 Saving terminal profiles files..."
 dconf dump /org/gnome/terminal/legacy/profiles:/ > terminal_profiles.dconf || echo "⚠️ No gnome terminal profil found!"
 echo "📦 Saving bash aliases ..."
 cp ~/.bash_aliases -t . || echo "⚠️ Could not find .bash_aliases"
@@ -28,6 +30,9 @@ echo "⚙️  Saving custom shorcuts ..."
 dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > $REPO_DIR/custom-shortcuts.txt || echo "⚠️ No custom shortcut keybinds found!"
 echo "⚙️  Saving custom window shorcuts ..."
 dconf dump /org/gnome/desktop/wm/keybindings/ > $REPO_DIR/window-shortcuts.txt || echo "⚠️ No custom window keybinds found!"
+
+echo "⚙️  Saving custom mimeapps config ..."
+cp ~/.config/*mimeapps.list $REPO_DIR
 
 # Not needed right now
 # echo "⚙️  Saving custom mutter shorcuts ..."
