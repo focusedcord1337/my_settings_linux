@@ -17,7 +17,7 @@ else
     git remote set-url origin "$GITHUB_REPO_URL"
 fi
 
-echo "🐧 Backupping Linux settings/config files..."
+echo "=== 🐧 Backupping Linux settings/config files ==="
 
 echo "📦 Saving terminal profiles files..."
 dconf dump /org/gnome/terminal/legacy/profiles:/ > terminal_profiles.dconf || echo "⚠️ No gnome terminal profil found!"
