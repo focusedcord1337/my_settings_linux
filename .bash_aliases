@@ -63,7 +63,7 @@ alias gcmnd='nano ~/my_linux/git_commands.txt'
 alias lnxs='nano ~/my_linux/usefull_comands.txt'
 
 #run my own programs
-alias svs='~/my_settings_linux/my_linux_backupps.sh; echo ''; ~/my_vscode_backupps/backupp_vs_code.sh'
+alias svs='~/my_settings_linux/my_linux_backupps.sh; echo ''; ~/my_vscode_backupps/backupp_vs_code.sh; echo ''; ~/yh_ac/my_backupp_school.sh'
 alias chs='~/qlf/C/build_h_source.sh'
 alias cphs='~/qlf/CPP/build_h_source.sh'
 alias vcpp='cmpl ~/qlf/CPP/cpp_version.cpp && ~/qlf/CPP/cpp_version'

@@ -44,7 +44,7 @@ cp ~/.config/*mimeapps.list $REPO_DIR
 # CONTROLL THAT THERE IS CHANGES
 if [[ -z "$(git status --porcelain)" ]]; then # -z checks if str from git status is empty
 
-    echo "✨ No changes detected in your Linux settings. Backup is already up to date!"
+    echo "✨ No changes detected in your school files. Backup is already up to date!"
     exit 0
 else
     # Add msg to commit if not just pressing enter
