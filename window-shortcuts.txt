@@ -1,5 +1,5 @@
 [/]
-begin-resize=['<Control>r']
+begin-resize=['<Shift><Control>r']
 close=['<Control><Alt>minus']
 minimize=['<Control><Alt>Down']
 switch-to-workspace-down=@as []
