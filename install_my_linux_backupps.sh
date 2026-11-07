@@ -20,7 +20,7 @@ fi
 echo "🐧 Installing Linux settings/config files..."
 
 echo "🛸 Getting latest settings..."
-git pull origin main || { echo "⚠️ Failed to get latest settings"; exit 1; }
+git pull origin main || { echo "⚠️ Failed to get latest settings"; }
 
 echo "🛠️ Installing terminal profiles..."
 if [[ -f "$REPO_DIR/terminal_profiles.dconf" ]]; then
@@ -34,6 +34,16 @@ if [[ -f "$REPO_DIR/window-shortcuts.txt" ]]; then
     dconf load /org/gnome/desktop/wm/keybindings/ < "$REPO_DIR/window-shortcuts.txt"
 else
     echo "⚠️ Loading custom window keybinds failed: File not found"
+fi
+
+echo "🛠️ Installing custom shortcuts..."
+
+if [[ -f "$REPO_DIR/custom-shortcuts.txt" ]]; then
+    # Ladda in mot media-keys/ basen
+    dconf load /org/gnome/settings-daemon/plugins/media-keys/ < "$REPO_DIR/custom-shortcuts.txt"
+    echo "✅ Custom shortcuts installed successfully!"
+else
+    echo "⚠️ Loading custom shortcuts failed: File not found at $REPO_DIR/custom-shortcuts.txt"
 fi
 
 echo "🛠️ Installing bash aliases..."

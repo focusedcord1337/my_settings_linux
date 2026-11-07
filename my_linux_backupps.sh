@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/env bash
 
 GITHUB_REPO_URL="git@github.com:focusedcord1337/my_settings_linux.git"
 
@@ -27,24 +27,19 @@ echo "📦 Saving bash profil ..."
 cp ~/.bash_profile -t . || echo "⚠️ Could not find .bash_profile"
 
 echo "⚙️  Saving custom shorcuts ..."
-dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > $REPO_DIR/custom-shortcuts.txt || echo "⚠️ No custom shortcut keybinds found!"
+# ÄNDRAD: Dumpar från media-keys/ istället för custom-keybindings/ för att få med index-listan
+dconf dump /org/gnome/settings-daemon/plugins/media-keys/ > "$REPO_DIR/custom-shortcuts.txt" || echo "⚠️ No custom shortcut keybinds found!"
+
 echo "⚙️  Saving custom window shorcuts ..."
-dconf dump /org/gnome/desktop/wm/keybindings/ > $REPO_DIR/window-shortcuts.txt || echo "⚠️ No custom window keybinds found!"
+dconf dump /org/gnome/desktop/wm/keybindings/ > "$REPO_DIR/window-shortcuts.txt" || echo "⚠️ No custom window keybinds found!"
 
 echo "⚙️  Saving custom mimeapps config ..."
-cp ~/.config/*mimeapps.list $REPO_DIR
-
-# Not needed right now
-# echo "⚙️  Saving custom mutter shorcuts ..."
-# dconf dump /org/gnome/mutter/keybindings/ > $REPO_DIR/mutter-shortcuts.txt || echo "⚠️ No custom mutter keybinds found!"
-# echo "⚙️  Saving custom shell shorcuts ..."
-# dconf dump /org/gnome/shell/keybindings/ > $REPO_DIR/shell-shortcuts.txt || echo "⚠️ No custom shell keybinds found!"
-
+cp ~/.config/*mimeapps.list "$REPO_DIR"
 
 # CONTROLL THAT THERE IS CHANGES
 if [[ -z "$(git status --porcelain)" ]]; then # -z checks if str from git status is empty
 
-    echo "✨ No changes detected in your school files. Backup is already up to date!"
+    echo "✨ No changes detected in your settings files. Backup is already up to date!"
     exit 0
 else
     # Add msg to commit if not just pressing enter
