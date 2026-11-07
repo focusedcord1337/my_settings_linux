@@ -315,6 +315,10 @@ my_dir_find(){ #Finds dirs containg args recursivly
 	fi
 }
 
+my_rm_empty_tmps(){ # Rm empty files and shows word count of non empty once matching a pattern
+	find ~/ -type f -name ".*.tmp" -exec sh -c 'for f; do [ ! -s "$f" ] && echo "0 $f (Deleted)" && rm -i "$f" || wc -w "$f"; done' _ {} +
+}
+ 
 parse_git_branch() { # Function that only generate branch name if inside Git-repo
 	if git rev-parse --is-inside-work-tree &>/dev/null; then
 	echo " ($(git branch --show-current 2>/dev/null))"
