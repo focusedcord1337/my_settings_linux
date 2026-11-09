@@ -4,6 +4,7 @@
 alias ..='cd ..'
 alias df='df -h'
 alias lah='ls -lah'
+alias memd='du -sh'
 alias cl="clear"
 alias mkdir='mkdir -p'
 alias rm='rm -i'
