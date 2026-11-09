@@ -319,6 +319,26 @@ my_rm_empty_tmps(){ # Rm empty files and shows word count of non empty once matc
 	find ~/ -type f -name ".*.tmp" -exec sh -c 'for f; do [ ! -s "$f" ] && echo "0 $f (Deleted)" && rm -i "$f" || wc -w "$f"; done' _ {} +
 }
  
+my_git_sync_remote_branches(){ # Removes all branches that has been deleted on remote
+	branches="git branch -D"
+
+	if [[ "$#" -gt "0" ]]; then
+		flg_dry_run="-n"
+		j=0
+		# Check for flags
+		while [[ "$j" -le "$#" ]]; do
+			# If dry run option is found
+			if [[ "${!j}" = "$flg_dry_run" ]]; then
+			 	branches="printf "%s\n""
+				break
+			fi
+			((j++))
+		done
+	fi
+
+	git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r "$branches"
+		
+}
 parse_git_branch() { # Function that only generate branch name if inside Git-repo
 	if git rev-parse --is-inside-work-tree &>/dev/null; then
 	echo " ($(git branch --show-current 2>/dev/null))"
