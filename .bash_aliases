@@ -216,6 +216,7 @@ cmpl(){ # Compiling c or c++ file using gcc | g++ can take in includes aswell
 	my_sep
 }
 
+# File functions
 my_f_find(){ # Finds a file recursivly 
 
 	if [[ "$#" -lt 1 ]]; then
@@ -319,7 +320,37 @@ my_dir_find(){ #Finds dirs containg args recursivly
 my_rm_empty_tmps(){ # Rm empty files and shows word count of non empty once matching a pattern
 	find ~/ -type f -name ".*.tmp" -exec sh -c 'for f; do [ ! -s "$f" ] && echo "0 $f (Deleted)" && rm -i "$f" || wc -w "$f"; done' _ {} +
 }
- 
+
+my_regex_ls(){ # Function that gives a dir with files containing $1 can customize depth in $2
+
+	if [[ "$#" -lt "1" ]]; then
+	    printf "Need too send in atleast 1 arg in order [regex, feilds, ...]\n\n"
+		printf "OBS --pretty flag defined to make clearer output only usabel as arg 3!\n"
+	elif [[ "$#" -lt "2" ]]; then
+	    grep -rl "$1" | cut -d '/' -f1 | uniq |  xargs -I {} echo {}
+	else
+
+		j=1
+		pretty=0
+		# Check for flags
+		while [[ "$j" -le "$#" ]]; do
+			# If --pretty option is found
+			[[ "${!j}" == "--pretty" ]] && my_sep && pretty=1 && break
+			((j++))
+		done
+
+		# Error checking for $2
+		[[ "$2" == "--pretty" ]] && printf "%s\n" "The --pretty flag cant be arg 2!" && my_sep && return 
+		[[ "$2" -eq "0" ]] && printf "%s\n" "The field arg need to be a number > 0!" && my_sep && return 
+
+		[[ "$pretty" -gt "0" ]] && printf "Found regex \"$1\" in:\n\n"
+
+	    grep -rl "$1" | cut -d '/' -f"$2" | uniq |  xargs -I {} echo {}
+
+		[[ "$pretty" -gt "0" ]] && my_sep
+	fi
+}
+
 my_git_sync_remote_branches(){ # Removes all branches that has been deleted on remote
 	branches="git branch -D"
 
