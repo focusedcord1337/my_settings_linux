@@ -133,7 +133,7 @@ bk(){ # Going backwards 1 or moore steps, popd to get back to dir
 
 my_pre_pend(){ # Add's prefix to files
 	if [[ "$#" -gt 1 ]]; then
-		ls $1 | while read -r file; do mv -- "$file" "$2$file"; done
+		ls $1 | while read -r file; do mv -- "$1/$file" "$1/$2$file"; done
 	else
 		printf "%s\n" "\nArg1 [what files], Arg2 [What to pre pend]"
 	fi
@@ -142,7 +142,7 @@ my_pre_pend(){ # Add's prefix to files
 
 my_de_pre_pend(){ # Function to remove prefix
 	if [[ "$#" -gt 1 ]]; then
-		ls $1* | while read -r file; do mv -- "$file" "${file#$2}"; done
+		ls $1 | while read -r file; do mv -- "$1/$file" "$1/${file#$2}"; done
 	else
 		printf "%s\n" "\nArg1 [what files], Arg2 [What to de pre pend]"
 	fi
