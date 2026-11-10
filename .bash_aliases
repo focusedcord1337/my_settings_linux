@@ -351,6 +351,53 @@ my_regex_ls(){ # Function that gives a dir with files containing $1 can customiz
 	fi
 }
 
+my_mv_w_regx(){ # Function that moves dirs/files from . if having regex inside it E.g moving all prodjecta that has #include <Arduino.h> in it  
+
+	if [[ "$#" -lt "2" ]]; then
+	    my_sep "="
+		printf "Need too send in [regex, dest] Optinal is [field | -flags ]\n"
+		printf "\nOBS if argcount == 2 only files will be moved if > 2 it depends on your field value\n"
+		printf "\nOBS field default = 1 else if n found in <= arg3 will be largest number\n"
+		printf "\nOBS -n flag defined for dry run (if args == 3 only files with regex else if args > 3 => dry run dirs/files)!\n"
+		my_sep "="
+	elif [[ "$#" -eq "2" ]];then
+		grep -rl "$1" |  xargs -I {} mv {} -t "$2"
+	else
+
+		flg_dry_run="-n"
+		field="1"
+		is_dry=0
+		j=3
+
+		# Check for flags
+		while [[ "$j" -le "$#" ]]; do
+			
+			if [[ "${!j}" -gt "0" ]]; then
+				field="${!j}"
+				
+			elif [[ "${!j}" = "$flg_dry_run" ]]; then
+				is_dry=1
+			fi
+
+			((j++))
+		done
+		
+		# If dry run option is found
+		if [[ "$is_dry" -gt "0" ]]; then
+			printf "Would move:\n"
+
+			if [[ "$#" -eq "3" ]]; then
+				grep -rl "$1" | xargs -I {} echo {} && return
+			else
+				grep -rl "$1" | cut -d '/' -f"$field" | uniq |  xargs -I {} echo {} && return
+			fi
+		fi
+
+		grep -rl "$1" | cut -d '/' -f"$field" | uniq |  xargs -I {} mv {} -t "$2"
+				
+	fi
+}
+
 my_git_sync_remote_branches(){ # Removes all branches that has been deleted on remote
 	branches="git branch -D"
 
