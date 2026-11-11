@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-# 	Custom sys/bash commands
+# Custom sys/bash commands
 alias ..='cd ..'
-alias df='df -h'
 alias lah='ls -lah'
-alias memd='du -sh'
 alias cl="clear"
 alias mkdir='mkdir -p'
 alias rm='rm -i'
@@ -14,6 +12,12 @@ alias os_v='lsb_release -a'
 alias penv='printenv | less'
 alias pzombie='ps -ef | grep defunct'
 
+
+# MEMORY aliases
+alias df='df -h'
+# Get memory total of specified path
+alias memd='du -sh'
+
 alias type="type -a"
 alias typ="type -a"
 alias py3='python3'
@@ -22,7 +26,7 @@ alias py3='python3'
 alias less='less --use-color'
 export MANPAGER="less --use-color"
 
-# git aliases
+# GIT aliases
 alias g='git'
 alias gnm='git diff-tree --name-only --pretty -r'
 alias gsts='git status'
@@ -112,6 +116,11 @@ ASCII(){ # Prints ASCII characters, special characters excluded E.g \n
 	END{printf "\t---\t---\t---\t-\n\tOCT\tHEX\tDEC\tCHAR\n\t---\t---\t---\t---\n"}'
 	
 	my_sep
+}
+ 
+my_lsmem(){ # Get a list file contents size sorted
+	[[ "$#" -lt "1" ]] && printf "Need to sen in a path as arg\n" && return
+	du -sh $1 | sort -h
 }
 
 bk(){ # Going backwards 1 or moore steps, popd to get back to dir
@@ -418,6 +427,7 @@ my_git_sync_remote_branches(){ # Removes all branches that has been deleted on r
 	git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r "$branches"
 		
 }
+
 parse_git_branch() { # Function that only generate branch name if inside Git-repo
 	if git rev-parse --is-inside-work-tree &>/dev/null; then
 	echo " ($(git branch --show-current 2>/dev/null))"
