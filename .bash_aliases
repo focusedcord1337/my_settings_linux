@@ -117,7 +117,166 @@ ASCII(){ # Prints ASCII characters, special characters excluded E.g \n
 	
 	my_sep
 }
- 
+
+my_unit(){ # Function that prints out unit or convert a number based in unit
+	
+	if [[ $# -eq 0 ]]; then
+        printf "%s\n" \
+            "Usage: unit <value> <prefix>" \
+            "       unit <value><prefix>" \
+            "" \
+            "Examples:" \
+            "  unit 500 milli    -> 0.5" \
+            "  unit 500m         -> 0.5" \
+            "  unit 500T         -> 500 000 000 000 000" \
+            "  unit 4 Gi         -> 4 294 967 296" \
+            "" \
+            "=== SI Decimal Prefixes (Base 10) ===" \
+            "Name       Symbol   Value (based on 1)" \
+            "----------------------------------------" \
+            "quetta     Q        1e+30" \
+            "ronna      R        1e+27" \
+            "yotta      Y        1e+24" \
+            "zetta      Z        1e+21" \
+            "exa        E        1 000 000 000 000 000 000" \
+            "peta       P        1 000 000 000 000 000" \
+            "tera       T        1 000 000 000 000" \
+            "giga       G        1 000 000 000" \
+            "mega       M        1 000 000" \
+            "kilo       k        1 000" \
+            "hecto      h        100" \
+            "deca       da       10" \
+            "deci       d        0.1" \
+            "centi      c        0.01" \
+            "milli      m        0.001" \
+            "micro      u / µ    0.000001" \
+            "nano       n        0.000000001" \
+            "pico       p        0.000000000001" \
+            "femto      f        0.000000000000001" \
+            "atto       a        1e-18" \
+            "zepto      z        1e-21" \
+            "yocto      y        1e-24" \
+            "ronto      r        1e-27" \
+            "quecto     q        1e-30" \
+            "" \
+            "=== Binary Computing Prefixes (Base 2) ===" \
+            "Name       Symbol   Value (based on 1)" \
+            "----------------------------------------" \
+            "quebi      Qi       1 267 650 600 228 229 401 496 703 205 376" \
+            "robi       Ri       1 237 940 039 285 380 274 899 124 224" \
+            "yobi       Yi       1 208 925 819 614 629 174 706 176" \
+            "zebi       Zi       1 180 591 620 717 411 303 424" \
+            "exbi       Ei       1 152 921 504 606 846 976" \
+            "pebi       Pi       1 125 899 906 842 624" \
+            "tebi       Ti       1 099 511 627 776" \
+            "gibi       Gi       1 073 741 824" \
+            "mebi       Mi       1 048 576" \
+            "kibi       Ki       1 024"
+        return 0
+    fi
+
+    local val=""
+    local prefix=""
+
+    # Support both "unit 500 m" and "unit 500m"
+    if [[ $# -eq 1 && "$1" =~ ^([+-]?[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?)([a-zA-Zµ]+)$ ]]; then
+        val="${BASH_REMATCH[1]}"
+        prefix="${BASH_REMATCH[3]}"
+
+    elif [[ $# -eq 2 ]]; then
+        val="$1"
+        prefix="$2"
+    
+	else
+        echo "Error: Invalid arguments. Run 'unit' with no arguments for help." >&2
+        return 1
+    fi
+
+    awk -v val="$val" -v p="$prefix" 'BEGIN {
+        # SI Large prefixes
+        map["da"] = 1e1;  map["deca"]   = 1e1;  map["deka"] = 1e1;
+        map["h"]  = 1e2;  map["hecto"]  = 1e2;
+        map["k"]  = 1e3;  map["kilo"]   = 1e3;
+        map["M"]  = 1e6;  map["mega"]   = 1e6;
+        map["G"]  = 1e9;  map["giga"]   = 1e9;
+        map["T"]  = 1e12; map["tera"]   = 1e12;
+        map["P"]  = 1e15; map["peta"]   = 1e15;
+        map["E"]  = 1e18; map["exa"]    = 1e18;
+        map["Z"]  = 1e21; map["zetta"]  = 1e21;
+        map["Y"]  = 1e24; map["yotta"]  = 1e24;
+        map["R"]  = 1e27; map["ronna"]  = 1e27;
+        map["Q"]  = 1e30; map["quetta"] = 1e30;
+
+        # SI Small prefixes
+        map["d"]  = 1e-1;  map["deci"]   = 1e-1;
+        map["c"]  = 1e-2;  map["centi"]  = 1e-2;
+        map["m"]  = 1e-3;  map["milli"]  = 1e-3;
+        map["u"]  = 1e-6;  map["µ"]      = 1e-6; map["micro"] = 1e-6;
+        map["n"]  = 1e-9;  map["nano"]   = 1e-9;
+        map["p"]  = 1e-12; map["pico"]   = 1e-12;
+        map["f"]  = 1e-15; map["femto"]  = 1e-15;
+        map["a"]  = 1e-18; map["atto"]   = 1e-18;
+        map["z"]  = 1e-21; map["zepto"]  = 1e-21;
+        map["y"]  = 1e-24; map["yocto"]  = 1e-24;
+        map["r"]  = 1e-27; map["ronto"]  = 1e-27;
+        map["q"]  = 1e-30; map["quecto"] = 1e-30;
+
+        # Binary Computing prefixes (IEC)
+        map["Ki"] = 1024^1; map["kibi"] = 1024^1;
+        map["Mi"] = 1024^2; map["mebi"] = 1024^2;
+        map["Gi"] = 1024^3; map["gibi"] = 1024^3;
+        map["Ti"] = 1024^4; map["tebi"] = 1024^4;
+        map["Pi"] = 1024^5; map["pebi"] = 1024^5;
+        map["Ei"] = 1024^6; map["exbi"] = 1024^6;
+        map["Zi"] = 1024^7; map["zebi"] = 1024^7;
+        map["Yi"] = 1024^8; map["yobi"] = 1024^8;
+        map["Ri"] = 1024^9; map["robi"] = 1024^9;
+        map["Qi"] = 1024^10; map["quebi"] = 1024^10;
+
+        if (!(p in map)) {
+            print "Error: Unknown prefix \x27" p "\x27. Run \x27unit\x27 for valid prefixes." > "/dev/stderr"
+            exit 1
+        }
+
+        res = val * map[p]
+        abs_res = (res < 0) ? -res : res
+
+        # Expand numbers >= 1000 fully with space separators; keep small decimals clean
+        if (abs_res >= 1000 && abs_res < 1e35) {
+            str = sprintf("%.15f", res)
+            sub(/\.?0+$/, "", str)
+        } else {
+            str = sprintf("%.18g", res)
+        }
+
+        # Insert spaces every 3 digits in the integer part (if not scientific notation)
+        if (str !~ /[eE]/) {
+            split(str, parts, ".")
+            int_part = parts[1]
+            dec_part = (length(parts) > 1) ? "." parts[2] : ""
+
+            sign = ""
+            if (substr(int_part, 1, 1) == "-") {
+                sign = "-"
+                int_part = substr(int_part, 2)
+            }
+
+            formatted = ""
+            len = length(int_part)
+            for (i = 1; i <= len; i++) {
+                formatted = formatted substr(int_part, i, 1)
+                rem = len - i
+                if (rem > 0 && rem % 3 == 0) {
+                    formatted = formatted " "
+                }
+            }
+            str = sign formatted dec_part
+        }
+
+        print str
+    }'
+}
+
 my_lsmem(){ # Get a list file contents size sorted
 	[[ "$#" -lt "1" ]] && printf "Need to sen in a path as arg\n" && return
 	du -sh $1 | sort -h
