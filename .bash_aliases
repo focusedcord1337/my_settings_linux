@@ -74,7 +74,7 @@
 
 #run my own programs
 	alias svs='~/my_linux/backupp_all.sh'
-
+	
 	alias chs='~/qlf/C/build_h_source.sh'
 	alias cphs='~/qlf/CPP/build_h_source.sh'
 	alias vcpp='cmpl ~/qlf/CPP/cpp_version.cpp && ~/qlf/CPP/cpp_version'
@@ -95,6 +95,23 @@
 
 	# print on startupp every terminal
 	my_sys_info
+
+	bk(){ # Going backwards 1 or moore steps, popd to get back to dir
+
+		backing="../"
+
+		if [[ "$(($# + 0))" -gt 0 ]]; then
+			if [[ " $((0 + $1))" -gt 1 ]]; then
+				i=1
+				while [[ $i -lt "$1" ]]; do
+					backing="../$backing" #echo $backing
+					((i++))
+				done
+			fi
+		fi
+		
+		pushd "$backing"
+	}
 
 	my_sep(){ #Prints seperator
 			sep="_" 
@@ -289,23 +306,6 @@
 		du -sh $1 | sort -h
 	}
 
-	bk(){ # Going backwards 1 or moore steps, popd to get back to dir
-
-		backing="../"
-
-		if [[ "$(($# + 0))" -gt 0 ]]; then
-			if [[ " $((0 + $1))" -gt 1 ]]; then
-				i=1
-				while [[ $i -lt "$1" ]]; do
-					backing="../$backing" #echo $backing
-					((i++))
-				done
-			fi
-		fi
-		
-		pushd "$backing"
-	}
-
 	my_pre_pend(){ # Add's prefix to files
 		if [[ "$#" -gt 1 ]]; then
 			ls $1 | while read -r file; do mv -- "$1/$file" "$1/$2$file"; done
@@ -323,7 +323,7 @@
 		fi
 	}
 
-	cmpl(){ # Compiling c or c++ file using gcc | g++ can take in includes aswell
+	my_cmpl(){ # Compiling c or c++ file using gcc | g++ can take in includes aswell
 		my_sep
 		cmpler=""
 		printf "Arg1 = main.CXX, Arg [...] is include paths\n\n"
@@ -389,6 +389,45 @@
 			printf "%s\n" "Need to send in atleast 1 arg.\narg 1 = file, [...] include path or file"
 		fi
 		my_sep
+	}
+
+	my_cxx_asm_cmpl(){ # Comiles cxx files and put out asmbly code for it, if c++
+
+		cmpler=""
+		v_standard="17"
+
+		if [[ "$#" -eq 0 ]]; then
+			printf "Arg1 = main.CXX, Arg2 = cxx standard (optinal, the default is 17)\n"
+			printf "OBS. If Arg1 = *.cpp file then it will also generate a demangeled file\n\n"
+		else
+			bin="${1%.*}"
+			
+			if [[ "$#" -gt 1 ]]; then
+				v_standard="$2"
+			fi
+			
+			if [[ "$bin" != "$1" ]]; then
+				exstension=".${1##*.}"
+			
+				if [[ "$exstension" = ".c" ]]; then
+					cmpler="gcc "
+					v_standard="-std=c$v_standard"
+				
+				elif [[ "$exstension" = ".cpp" ]]; then
+					cmpler="g++ "
+					v_standard="-std=c++$v_standard"
+                    post_fix_demangeled="_demangeled.s"
+                fi
+			fi
+
+            echo "$cmpler $1 $v_standard -S -fverbose-asm -o $bin.s"
+            $cmpler "$1" "$v_standard" -S -fverbose-asm -o "$bin.s" 
+            
+            if [[ "$exstension" = ".cpp" ]]; then
+                echo "c++filt < $bin.s > $bin$post_fix_demangeled"
+			    c++filt < "$bin.s" > "$bin$post_fix_demangeled"
+            fi
+		fi
 	}
 
 	# File functions
@@ -594,11 +633,11 @@
 		git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r $branches
 	}
 
-	parse_git_branch() { # Function that only generate branch name if inside Git-repo
+	my_parse_git_branch() { # Function that only generate branch name if inside Git-repo
 		if git rev-parse --is-inside-work-tree &>/dev/null; then
 		echo " ($(git branch --show-current 2>/dev/null))"
 		fi
 	}
 
 # Uppdate PS1 to include git branch if inside repo
-	export PS1="${PS1%\\\$*}\[\033[38;5;14m\]\$(parse_git_branch)\[\033[00m\]\$  "
+	export PS1="${PS1%\\\$*}\[\033[38;5;14m\]\$(my_parse_git_branch)\[\033[00m\]\$  "
