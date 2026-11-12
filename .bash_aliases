@@ -6,12 +6,13 @@ alias lah='ls -lah'
 alias cl="clear"
 alias mkdir='mkdir -p'
 alias rm='rm -i'
+# Env things
 alias s.insta='sudo apt install'
 alias os_version='lsb_release -a'
 alias os_v='lsb_release -a'
 alias penv='printenv | less'
 alias pzombie='ps -ef | grep defunct'
-
+alias pfuncs='declare -F'
 
 # MEMORY aliases
 alias df='df -h'
@@ -567,10 +568,11 @@ my_mv_w_regx(){ # Function that moves dirs/files from . if having regex inside i
 }
 
 my_git_sync_remote_branches(){ # Removes all branches that has been deleted on remote
-	branches="git branch -D"
+	branches="git branch -d"
 
 	if [[ "$#" -gt "0" ]]; then
 		flg_dry_run="-n"
+
 		j=0
 		# Check for flags
 		while [[ "$j" -le "$#" ]]; do
@@ -583,8 +585,7 @@ my_git_sync_remote_branches(){ # Removes all branches that has been deleted on r
 		done
 	fi
 
-	git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r "$branches"
-		
+	git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r $branches
 }
 
 parse_git_branch() { # Function that only generate branch name if inside Git-repo
