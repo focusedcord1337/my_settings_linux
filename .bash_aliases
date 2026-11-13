@@ -32,6 +32,7 @@
 
 # GIT aliases
 	alias g='git'
+	# See files in a commit
 	alias gnm='git diff-tree --name-only --pretty -r'
 	alias gsts='git status'
 	alias glog='git log --oneline'
@@ -50,6 +51,7 @@
 		alias gcam='git commit --amend'
 		
 	# Git push & pulls
+		# pulls repo 
 		alias pu='git pull'
 		alias ppu='git pull && git push'
 		alias gpust='git push --tags'
@@ -70,7 +72,7 @@
 # Open own things 
 	alias gcmnd='nano ~/my_linux/git_commands.txt'
 	alias lnxs='nano ~/my_linux/usefull_comands.txt'
-	alias vs="~/my_vscode_backupps/vs_code_cheat_sheet.md"
+	alias vs="nano ~/my_vscode_backupps/vs_code_cheat_sheet.md"
 
 #run my own programs
 	alias svs='~/my_linux/backupp_all.sh'
@@ -306,23 +308,6 @@
 		du -sh $1 | sort -h
 	}
 
-	my_pre_pend(){ # Add's prefix to files
-		if [[ "$#" -gt 1 ]]; then
-			ls $1 | while read -r file; do mv -- "$1/$file" "$1/$2$file"; done
-		else
-			printf "%s\n" "\nArg1 [what files], Arg2 [What to pre pend]"
-		fi
-
-	}
-
-	my_de_pre_pend(){ # Function to remove prefix
-		if [[ "$#" -gt 1 ]]; then
-			ls $1 | while read -r file; do mv -- "$1/$file" "$1/${file#$2}"; done
-		else
-			printf "%s\n" "\nArg1 [what files], Arg2 [What to de pre pend]"
-		fi
-	}
-
 	my_cmpl(){ # Compiling c or c++ file using gcc | g++ can take in includes aswell
 		my_sep
 		cmpler=""
@@ -430,7 +415,7 @@
 		fi
 	}
 
-	# File functions
+	# Find funcs functions
 	my_f_find(){ # Finds a file recursivly 
 
 		if [[ "$#" -lt 1 ]]; then
@@ -531,10 +516,36 @@
 		fi
 	}
 
-	my_rm_empty_tmps(){ # Rm empty files and shows word count of non empty once matching a pattern
-		find ~/ -type f -name ".*.tmp" -exec sh -c 'for f; do [ ! -s "$f" ] && echo "0 $f (Deleted)" && rm -i "$f" || wc -w "$f"; done' _ {} +
+	my_aliases_grep(){ # Function to grep aliases and get their doc if any
+		
+		if [[ "$#" -eq 0 ]]; then
+				printf "Need atleast 1 thing to search for\n\n"
+		else
+			for e in "$@"; do
+				tmp="$(alias | grep -A1 "$e")"
+				echo "$tmp"
+			done
+		fi
 	}
 
+	my_pre_pend(){ # Add's prefix to files
+		if [[ "$#" -gt 1 ]]; then
+			ls $1 | while read -r file; do mv -- "$1/$file" "$1/$2$file"; done
+		else
+			printf "%s\n" "\nArg1 [what files], Arg2 [What to pre pend]"
+		fi
+
+	}
+
+	my_de_pre_pend(){ # Function to remove prefix
+		if [[ "$#" -gt 1 ]]; then
+			ls $1 | while read -r file; do mv -- "$1/$file" "$1/${file#$2}"; done
+		else
+			printf "%s\n" "\nArg1 [what files], Arg2 [What to de pre pend]"
+		fi
+	}
+
+	# Regex files
 	my_regex_ls(){ # Function that gives a dir with files containing $1 can customize depth in $2
 
 		if [[ "$#" -lt "1" ]]; then
@@ -612,6 +623,11 @@
 		fi
 	}
 
+	my_rm_empty_tmps(){ # Rm empty files and shows word count of non empty once matching a pattern
+		find ~/ -type f -name ".*.tmp" -exec sh -c 'for f; do [ ! -s "$f" ] && echo "0 $f (Deleted)" && rm -i "$f" || wc -w "$f"; done' _ {} +
+	}
+
+	# Git branch funcs
 	my_git_sync_remote_branches(){ # Removes all branches that has been deleted on remote
 		branches="git branch -d"
 
@@ -640,4 +656,4 @@
 	}
 
 # Uppdate PS1 to include git branch if inside repo
-	export PS1="${PS1%\\\$*}\[\033[38;5;14m\]\$(my_parse_git_branch)\[\033[00m\]\$  "
+	export PS1="${PS1%\\\$*}\[\033[38;5;14m\]\$(my_parse_git_branch)\[\033[00m\]\$ "
