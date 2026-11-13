@@ -70,8 +70,8 @@
 		alias gmm='git switch main || git switch master && git pull && git switch - && git merge main || git merge master'
 
 # Open own things 
-	alias gcmnd='nano ~/my_linux/git_commands.txt'
-	alias lnxs='nano ~/my_linux/usefull_comands.txt'
+	alias gcmnd='nano ~/my_linux/git_commands.md'
+	alias lnxs='nano ~/my_linux/usefull_comands.md'
 	alias vs="nano ~/my_vscode_backupps/vs_code_cheat_sheet.md"
 
 #run my own programs
@@ -516,17 +516,39 @@
 		fi
 	}
 
-	my_aliases_grep(){ # Function to grep aliases and get their doc if any
-		
+	my_aliases_grep() { # Function to grep aliases and get their doc if any
 		if [[ "$#" -eq 0 ]]; then
-				printf "Need atleast 1 thing to search for\n\n"
-		else
-			for e in "$@"; do
-				tmp="$(alias | grep -A1 "$e")"
-				echo "$tmp"
-			done
+			printf "Need at least 1 arg to search for regex\n\n"
+			return 1
 		fi
+
+		local pattern
+		pattern=$(IFS='|'; echo "$*")
+
+		awk -v pat="$pattern" '
+		BEGIN {
+			red   = "\033[1;31m"
+			green = "\033[0;32m"
+			cyan  = "\033[0;36m"
+			reset = "\033[0m"
+		}
+		$0 ~ pat && !/^[[:space:]]*#/ && /^[[:space:]]+alias/ {
+			
+			if (prev ~ /^[[:space:]]*#/) {
+				clean_prev = prev
+				sub(/^[[:space:]]+/, "", clean_prev)
+				print "\n" green NR-1 cyan "- " reset clean_prev
+			}
+			line = $0
+			sub(/^[[:space:]]+/, "", line)
+			gsub(pat, red "&" reset, line)
+			print green NR cyan ": " reset line
+		}
+		{ prev = $0 }
+		' ~/.bash_aliases
 	}
+
+
 
 	my_pre_pend(){ # Add's prefix to files
 		if [[ "$#" -gt 1 ]]; then
