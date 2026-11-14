@@ -1,0 +1,22 @@
+[Added Associations]
+application/octet-stream=code.desktop;
+application/x-code-workspace=code.desktop;
+text/x-csrc=code.desktop;
+text/x-chdr=code.desktop;
+text/x-c++src=code.desktop;
+text/x-c++hdr=code.desktop;
+text/x-python=code.desktop;
+text/x-makefile=code.desktop;
+text/x-cmake=code.desktop;
+
+[Default Applications]
+application/x-code-workspace=code.desktop;
+text/x-csrc=code.desktop;
+text/x-chdr=code.desktop;
+text/x-c++src=code.desktop;
+text/x-c++hdr=code.desktop;
+text/x-python=code.desktop;
+text/x-makefile=code.desktop;
+text/x-cmake=code.desktop;
+x-scheme-handler/eclipse+command=_usr_local_mcuxpressoide-25.6.136_ide_.desktop;
+x-scheme-handler/eclipse+mpc=_usr_local_mcuxpressoide-25.6.136_ide_.desktop;

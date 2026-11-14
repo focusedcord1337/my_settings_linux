@@ -61,7 +61,7 @@ fi
 
 if [[ -f "$REPO_DIR/mimeapps.list" ]]; then
     echo "🛠️ Installing custom mimeapps config..."
-    cp "$REPO_DIR/*mimeapps.list" -t  ~/.config/
+    cp $REPO_DIR/mimeapps.list -t  ~/.config/
 else
     echo "⚠️ Could not find .bash_profile in repository"
 fi
