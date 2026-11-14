@@ -1,3 +1,26 @@
+[/]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']
+
+[custom-keybindings/custom0]
+binding='<Super>k'
+command='gnome-control-center keyboard'
+name='keyboard settings'
+
+[custom-keybindings/custom1]
+binding='<Control><Alt>s'
+command="gnome-terminal -- bash -i -c 'svs; read -p \"⏯️     Press key to coninue ...\"; c'"
+name='Save all configs'
+
+[custom-keybindings/custom2]
+binding='F8'
+command='gnome-characters'
+name='Gnome characters 1'
+
+[custom-keybindings/custom3]
+binding='<Control><Alt>e'
+command='gnome-characters'
+name='Gnome characters 2'
+
 [custom0]
 binding='<Super>k'
 command='gnome-control-center keyboard'

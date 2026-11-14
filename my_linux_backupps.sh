@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/env bash
 
 GITHUB_REPO_URL="git@github.com:focusedcord1337/my_settings_linux.git"
 
@@ -17,24 +17,29 @@ else
     git remote set-url origin "$GITHUB_REPO_URL"
 fi
 
+# Dump from media-keys/ instead of custom-keybindings/ to get index-listan
 echo "=== 🐧 Backupping Linux settings/config files ==="
 
 echo "📦 Saving terminal profiles files..."
 dconf dump /org/gnome/terminal/legacy/profiles:/ > terminal_profiles.dconf || echo "⚠️ No gnome terminal profil found!"
+
 echo "📦 Saving bash aliases ..."
 cp ~/.bash_aliases -t . || echo "⚠️ Could not find .bash_aliases"
+
 echo "📦 Saving bash profil ..."
 cp ~/.bash_profile -t . || echo "⚠️ Could not find .bash_profile"
 
 echo "⚙️  Saving custom shorcuts ..."
-dconf dump /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ > $REPO_DIR/custom-shortcuts.txt || echo "⚠️ No custom shortcut keybinds found!"
+dconf dump /org/gnome/settings-daemon/plugins/media-keys/ > "$REPO_DIR/custom-shortcuts.txt" || echo "⚠️ No custom shortcut keybinds found!"
+
 echo "⚙️  Saving custom window shorcuts ..."
-dconf dump /org/gnome/desktop/wm/keybindings/ > $REPO_DIR/window-shortcuts.txt || echo "⚠️ No custom window keybinds found!"
+dconf dump /org/gnome/desktop/wm/keybindings/ > "$REPO_DIR/window-shortcuts.txt" || echo "⚠️ No custom window keybinds found!"
 
 echo "⚙️  Saving custom mimeapps config ..."
-cp ~/.config/*mimeapps.list $REPO_DIR
+cp ~/.config/*mimeapps.list "$REPO_DIR"
 
-# Not needed right now
+
+# Not needed right now for later
 # echo "⚙️  Saving custom mutter shorcuts ..."
 # dconf dump /org/gnome/mutter/keybindings/ > $REPO_DIR/mutter-shortcuts.txt || echo "⚠️ No custom mutter keybinds found!"
 # echo "⚙️  Saving custom shell shorcuts ..."
@@ -44,7 +49,7 @@ cp ~/.config/*mimeapps.list $REPO_DIR
 # CONTROLL THAT THERE IS CHANGES
 if [[ -z "$(git status --porcelain)" ]]; then # -z checks if str from git status is empty
 
-    echo "✨ No changes detected in your school files. Backup is already up to date!"
+    echo "✨ No changes detected in your settings files. Backup is already up to date!"
     exit 0
 else
     # Add msg to commit if not just pressing enter

@@ -20,39 +20,48 @@ fi
 echo "🐧 Installing Linux settings/config files..."
 
 echo "🛸 Getting latest settings..."
-git pull origin main || { echo "⚠️ Failed to get latest settings"; exit 1; }
+git pull origin main || { echo "⚠️ Failed to get latest settings"; }
 
-echo "🛠️ Installing terminal profiles..."
 if [[ -f "$REPO_DIR/terminal_profiles.dconf" ]]; then
+    echo "🛠️ Installing terminal profiles..."
     dconf load /org/gnome/terminal/legacy/profiles:/ < "$REPO_DIR/terminal_profiles.dconf"
 else
     echo "⚠️ Loading custom terminal profiles failed: File not found"
 fi
 
-echo "🛠️ Installing window keybinds..."
 if [[ -f "$REPO_DIR/window-shortcuts.txt" ]]; then
+    echo "🛠️ Installing window keybinds..."
     dconf load /org/gnome/desktop/wm/keybindings/ < "$REPO_DIR/window-shortcuts.txt"
 else
     echo "⚠️ Loading custom window keybinds failed: File not found"
 fi
 
-echo "🛠️ Installing bash aliases..."
+if [[ -f "$REPO_DIR/custom-shortcuts.txt" ]]; then
+    echo "🛠️ Installing custom shortcuts..."
+    # Ladda in mot media-keys/ basen
+    dconf load /org/gnome/settings-daemon/plugins/media-keys/ < "$REPO_DIR/custom-shortcuts.txt"
+    echo "✅ Custom shortcuts installed successfully!"
+else
+    echo "⚠️ Loading custom shortcuts failed: File not found at $REPO_DIR/custom-shortcuts.txt"
+fi
+
 if [[ -f "$REPO_DIR/.bash_aliases" ]]; then
+    echo "🛠️ Installing bash aliases..."
     cp "$REPO_DIR/.bash_aliases" ~/
 else
     echo "⚠️ Could not find .bash_aliases in repository"
 fi
 
-echo "🛠️ Installing bash profile..."
 if [[ -f "$REPO_DIR/.bash_profile" ]]; then
+    echo "🛠️ Installing bash profile..."
     cp "$REPO_DIR/.bash_profile" ~/
 else
     echo "⚠️ Could not find .bash_profile in repository"
 fi
 
-echo "🛠️ Installing custom mimeapps config..."
-if [[ -f "$REPO_DIR/*mimeapps.list" ]]; then
-    cp "$REPO_DIR/*mimeapps.list" ~/.config/
+if [[ -f "$REPO_DIR/mimeapps.list" ]]; then
+    echo "🛠️ Installing custom mimeapps config..."
+    cp "$REPO_DIR/*mimeapps.list" -t  ~/.config/
 else
     echo "⚠️ Could not find .bash_profile in repository"
 fi
