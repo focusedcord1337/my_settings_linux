@@ -7,6 +7,16 @@
 	alias mkdir='mkdir -p'
 	alias rm='rm -i'
 	alias s.insta='sudo apt install'
+
+# Hw stuff 
+    # List battery info
+    alias batinfo='upower -i $(upower -e | grep BAT)'
+    # See charge threshold 
+    alias batlimit='cat /sys/class/power_supply/BAT1/charge_control_end_threshold | xargs -I {} echo {}"%"'
+    # see status, limit and current now
+    alias batall='head -n 1 /sys/class/power_supply/BAT1/{status,power_now,current_now,charge_control_end_threshold} 2>/dev/null'
+    alias batman='$HOME/my_linux/battery/batman.md'
+
 # Env things
 	alias os_version='lsb_release -a'
 	alias os_v='lsb_release -a'
