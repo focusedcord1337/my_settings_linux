@@ -8,14 +8,21 @@
 	alias rm='rm -i'
 	alias s.insta='sudo apt install'
 
-# Hw stuff 
+# My mans
+    alias pthman='$HOME/my_linux/man'
+	alias lnxs='nano $HOME/my_linux/man/usefull_comands.md'
+	alias gcmnd='nano $HOME/my_linux/man/git_commands.md'
+	alias vs="nano $HOME/my_linux/man/vs_code.md"
+    alias chwak='nano $HOME/my_linux/man/awk_cheat_sheet.md'
+    alias batman='nano $HOME/my_linux/man/batman.md'
+
+# Battery commands 
     # List battery info
     alias batinfo='upower -i $(upower -e | grep BAT)'
     # See charge threshold 
     alias batlimit='cat /sys/class/power_supply/BAT1/charge_control_end_threshold | xargs -I {} echo {}"%"'
     # see status, limit and current now
     alias batall='head -n 1 /sys/class/power_supply/BAT1/{status,power_now,current_now,charge_control_end_threshold} 2>/dev/null'
-    alias batman='$HOME/my_linux/battery/batman.md'
 
 # Env things
 	alias os_version='lsb_release -a'
@@ -78,11 +85,6 @@
 
 		alias gbm='git switch main || git switch master && git pull'
 		alias gmm='git switch main || git switch master && git pull && git switch - && git merge main || git merge master'
-
-# Open own things 
-	alias gcmnd='nano ~/my_linux/git_commands.md'
-	alias lnxs='nano ~/my_linux/usefull_comands.md'
-	alias vs="nano ~/my_vscode_backupps/vs_code_cheat_sheet.md"
 
 #run my own programs
 	alias svs='~/my_linux/backupp_all.sh'
