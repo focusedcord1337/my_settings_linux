@@ -17,6 +17,8 @@ else
     git remote set-url origin "$GITHUB_REPO_URL"
 fi
 
+git pull
+
 # Dump from media-keys/ instead of custom-keybindings/ to get index-listan
 echo "=== 🐧 Backupping Linux settings/config files ==="
 
