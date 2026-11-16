@@ -9,12 +9,14 @@
 	alias s.insta='sudo apt install'
 
 # My mans
-    alias pthman='$HOME/my_linux/man'
-	alias lnxs='nano $HOME/my_linux/man/usefull_comands.md'
-	alias gcmnd='nano $HOME/my_linux/man/git_commands.md'
-	alias vs="nano $HOME/my_linux/man/vs_code.md"
-    alias chwak='nano $HOME/my_linux/man/awk_cheat_sheet.md'
-    alias batman='nano $HOME/my_linux/man/batman.md'
+    export my_man="$HOME/my_linux/man"
+	export my_man_ed='nano'
+    alias lnxs='$my_man_ed $my_man/usefull_comands.md'
+	alias gcmnd='$my_man_ed $my_man/my_linux/man/git_commands.md'
+	alias vs='$my_man_ed $my_man/vs_code.md'
+    alias chwak='$my_man_ed $my_man/awk_cheat_sheet.md'
+    alias batman='$my_man_ed $my_man/batman.md'
+    alias mcuxpresso='$my_man_ed $my_man/MCUXPresso.md'
 
 # Battery commands 
     # List battery info
