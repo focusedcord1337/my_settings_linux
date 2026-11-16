@@ -573,7 +573,7 @@
 
 	my_de_pre_pend(){ # Function to remove prefix
 		if [[ "$#" -gt 1 ]]; then
-			ls $1 | while read -r file; do mv -- "$1/$file" "$1/${file#$2}"; done
+			ls $1 | while read -r file; do mv -- "$1/$file" "$1/${file#$2}" 2>/dev/null; done
 		else
 			printf "%s\n" "\nArg1 [what files], Arg2 [What to de pre pend]"
 		fi
