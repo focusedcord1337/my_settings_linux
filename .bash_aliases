@@ -89,11 +89,15 @@
 		alias gmm='git switch main || git switch master && git pull && git switch - && git merge main || git merge master'
 
 #run my own programs
+    # Backupp all your settings
 	alias svs='~/my_linux/backupp_all.sh'
-	
-	alias chs='~/qlf/C/build_h_source.sh'
-	alias cphs='~/qlf/CPP/build_h_source.sh'
-	alias vcpp='cmpl ~/qlf/CPP/cpp_version.cpp && ~/qlf/CPP/cpp_version'
+	# Builds a c header and source file
+    alias chs='~/qlf/c/gen_hdr_src/build_h_source.sh'
+	# Builds a c++ header and source file
+    alias cphs='~/qlf/cpp/gen_hdr_src/build_h_source.sh'
+    # Compiles program & run program that shows your version of c++
+    alias vcpp='cmpl ~/qlf/cpp/cpp_version.cpp && ~/qlf/CPP/cpp_version'
+    # Generates a python moduel interactivly
 	alias pygen='python3 ~/libs/py/gen_py.py'
 
 # Functions
