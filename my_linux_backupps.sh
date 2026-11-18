@@ -54,6 +54,7 @@ if [[ -z "$(git status --porcelain)" ]]; then # -z checks if str from git status
     echo "✨ No changes detected in your settings files. Backup is already up to date!"
     exit 0
 else
+    git diff
     # Add msg to commit if not just pressing enter
     read -p "📔 Optional commit msg: " commit_msg
     if [[ "${#commit_msg}" -gt 0 ]]; then
