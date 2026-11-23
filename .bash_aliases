@@ -96,7 +96,7 @@
 	# Builds a c++ header and source file
     alias cphs='~/qlf/cpp/gen_hdr_src/build_h_source.sh'
     # Compiles program & run program that shows your version of c++
-    alias vcpp='cmpl ~/qlf/cpp/cpp_version.cpp && ~/qlf/CPP/cpp_version'
+    alias vcpp='my_cmpl ~/qlf/cpp/cpp_version.cpp && ~/qlf/cpp/cpp_version'
     # Generates a python moduel interactivly
 	alias pygen='python3 ~/libs/py/gen_py.py'
 
