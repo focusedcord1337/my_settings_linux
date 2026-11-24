@@ -14,7 +14,7 @@
     alias lnxs='$my_man_ed $my_man/usefull_comands.md'
 	alias gcmnd='$my_man_ed $my_man/my_linux/man/git_commands.md'
 	alias vs='$my_man_ed $my_man/vs_code.md'
-    alias chwak='$my_man_ed $my_man/awk_cheat_sheet.md'
+    alias chawk='$my_man_ed $my_man/awk_cheat_sheet.md'
     alias batman='$my_man_ed $my_man/batman.md'
     alias mcuxpresso='$my_man_ed $my_man/MCUXPresso.md'
 
@@ -99,6 +99,13 @@
     alias vcpp='my_cmpl ~/qlf/cpp/cpp_version.cpp && ~/qlf/cpp/cpp_version'
     # Generates a python moduel interactivly
 	alias pygen='python3 ~/libs/py/gen_py.py'
+
+# MCU Aliases
+    # Platformio
+    # Builds upploads and monitors prodjects to get sepcific env from .ini file add flag -e<env name> 
+    alias pior='pio run -t upload -t monitor'
+    # Run this if platformio wont auto launch it when upploading
+    alias teensy_loader='~/.platformio/packages/tool-teensy/teensy'
 
 # Functions
 	my_sys_info(){ # print desired sys info
