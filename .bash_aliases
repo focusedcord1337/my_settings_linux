@@ -44,6 +44,9 @@
 
 # Python
 	alias py3='python3'
+    # Enter a build in lib afterwards to see its man page
+    alias lpy='pydoc3'
+    alias lpip='python -m pip list'
 
 # coloring less & manpages
 	alias less='less --use-color'
