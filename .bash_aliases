@@ -576,8 +576,6 @@
 		' ~/.bash_aliases
 	}
 
-
-
 	my_pre_pend(){ # Add's prefix to files
 		if [[ "$#" -gt 1 ]]; then
 			ls $1 | while read -r file; do mv -- "$1/$file" "$1/$2$file"; done
@@ -676,6 +674,24 @@
 	my_rm_empty_tmps(){ # Rm empty files and shows word count of non empty once matching a pattern
 		find ~/ -type f -name ".*.tmp" -exec sh -c 'for f; do [ ! -s "$f" ] && echo "0 $f (Deleted)" && rm -i "$f" || wc -w "$f"; done' _ {} +
 	}
+
+    rm_bins(){ 
+        
+        if [[ "$#" -gt "0" ]]; then
+
+            for rm_path in "$@"; do  
+                is_home="$(echo "$(cd "$rm_path" 2> /dev/null && pwd)" | grep "$HOME/")"
+
+                if [[ "${#is_home}" -gt 0 ]]; then
+                    ls -dF "$rm_path"/* 2> /dev/null | grep '\*$' | xargs -I  {} -p bash -c 'rm  ${1%\*}' _ "{}"
+                else
+                    printf "\nUnvalid path: %s\n\n" "$rm_path   =>\nPaths gotta be atleast $HOME/* and exist to work!\n"
+                fi
+            done
+        else 
+            printf "Gotta send in at least 1 arg!\n Args shall be paths in which to rm binary files in that location!\n"
+        fi
+    }
 
 	# Git branch funcs
 	my_git_sync_remote_branches(){ # Removes all branches that has been deleted on remote
